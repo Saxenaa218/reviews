@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Modal } from "antd";
+import { Button, Image, Modal } from "antd";
 import { useState } from "react";
 import { Space } from "@/types/space";
 import TextInputForm from "@/components/TextInputForm";
@@ -42,7 +42,7 @@ const TextRecordButton: React.FC<{ data: Space }> = ({ data }) => {
       >
         <div className="my-5">
           <div className="flex gap-5 flex-col items-center my-10">
-            <img src={logo} alt={message} width={100} height={100} />
+            <Image src={logo} alt={message} width={100} height={100} />
             <h2 className="uppercase font-bold">Questions</h2>
             <ul className="list-disc list-inside">
               {questions.map((question) => (

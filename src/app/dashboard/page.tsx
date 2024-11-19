@@ -9,8 +9,6 @@ import { redirect } from "next/navigation";
 export default function Dashboard() {
   const { data: session } = useSession();
 
-  console.log(session);
-
   if (!session) {
     redirect("/login");
   }

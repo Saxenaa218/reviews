@@ -80,7 +80,7 @@ const TextInputForm: React.FC<{ onCancel: () => void }> = ({ onCancel }) => {
         <Input />
       </Form.Item>
 
-      <FormItemUpload name="profilePicture" label="Upload Profile Picture" />
+      {/* <FormItemUpload name="profilePicture" label="Upload Profile Picture" /> */}
 
       <Form.Item
         name="agreement"
