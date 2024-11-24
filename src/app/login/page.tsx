@@ -1,17 +1,16 @@
 "use client";
 
-import { Card, Button } from "antd";
-import { signIn } from "next-auth/react";
+import LoginWithGoogleBtn from "@/components/LoginWithGoogleBtn";
+import { Card } from "antd";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
-export default function LoginPage() {
-  const handleLogin = () => {
-    // need to add a google login via firebase
-    signIn("google", { callbackUrl: "/dashboard" });
-    // take the email and create a user object
-    // feed into prisma if its not there yet
-    // redirect to dashboard
-    // redirect("/dashboard")
-  };
+const LoginPage = () => {
+  const session = useSession();
+  const { push } = useRouter();
+
+  if (session.status === "authenticated") return push("/dashboard");
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <Card className="w-full max-w-md p-8 shadow-lg">
@@ -22,13 +21,10 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <Button
-          onClick={handleLogin}
-          className="w-full h-12 flex items-center justify-center gap-2 border border-gray-300 hover:bg-gray-50 transition-colors"
-        >
-          <span>Continue with Google</span>
-        </Button>
+        <LoginWithGoogleBtn />
       </Card>
     </div>
   );
-}
+};
+
+export default LoginPage;

@@ -1,13 +1,11 @@
 "use client";
 
-import { useTopicStore } from "@/app/hooks/useTopicStore";
-import { UploadOutlined } from "@ant-design/icons";
 import { Form, Input, Button, List, Checkbox, Upload } from "antd";
 import { message as antMessage } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import { useTopicStore } from "@/hooks/useTopicStore";
 
-const CreateTopicForm: React.FC<{ onSuccess: (data: any) => void }> = ({
-  onSuccess,
-}) => {
+const CreateTopicForm: React.FC = () => {
   const [form] = Form.useForm();
   const { topicFormData, setTopicFormData } = useTopicStore();
 
@@ -51,7 +49,6 @@ const CreateTopicForm: React.FC<{ onSuccess: (data: any) => void }> = ({
       }
 
       antMessage.success("Topic created successfully!");
-      onSuccess(data.data);
     } catch (error) {
       console.error("Error creating topic:", error);
       antMessage.error("Failed to create topic");

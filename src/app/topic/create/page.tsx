@@ -1,6 +1,6 @@
 "use client";
 
-import { useTopicStore } from "@/app/hooks/useTopicStore";
+import { useTopicStore } from "@/hooks/useTopicStore";
 import CreateTopicForm from "./CreateTopicForm";
 import TestimonialPage from "./TestimonialsPage";
 
@@ -19,7 +19,7 @@ const CreateTopic = () => {
         logo={logo}
         questions={questions}
       />
-      <CreateTopicForm onSuccess={() => {}} />
+      <CreateTopicForm />
     </div>
   );
 };

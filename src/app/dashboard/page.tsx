@@ -1,34 +1,38 @@
 "use client";
 
-import { Button } from "antd";
-import { GoogleOutlined } from "@ant-design/icons";
-import { useSession, signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import NavBar from "@/components/NavBar";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import Topics from "@/components/Topics";
+import { PlusOutlined } from "@ant-design/icons";
+import { Button } from "antd";
+import { useUser } from "@/hooks/useUser";
 
-export default function Dashboard() {
-  const { data: session } = useSession();
+const Dashboard = () => {
+  const session = useSession();
+  const { push } = useRouter();
 
-  if (!session) {
-    redirect("/login");
+  const { createOrUpdateUser, user } = useUser(session.data?.user?.email || "");
+
+  if (session.status === "unauthenticated") {
+    push("/login");
   }
 
   return (
     <div className="p-5">
       <NavBar />
-      {session ? (
-        <p className="text-5xl font-bold">Welcome, {session.user?.name}!</p>
-      ) : (
-        <Button
-          type="primary"
-          size="large"
-          icon={<GoogleOutlined />}
-          className="relative inline-flex items-center px-6 py-3 font-semibold text-white bg-gradient-to-r from-blue-600 to-purple-500 overflow-hidden rounded-md transition-all duration-300 hover:opacity-90"
-          onClick={() => signIn("google")}
-        >
-          <span className="relative">Login with Google</span>
-        </Button>
-      )}
+      <p className="text-5xl font-bold">Welcome, {user?.name}!</p>
+      <section>
+        <div className="flex items-center justify-between">
+          <h3 className="text-2xl font-bold my-10">Topics</h3>
+          <Button icon={<PlusOutlined />} onClick={() => push("/topic/create")}>
+            Create Topic
+          </Button>
+        </div>
+        <Topics />
+      </section>
     </div>
   );
-}
+};
+
+export default Dashboard;

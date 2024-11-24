@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// create a user table having name, email, Topics
+// create a Topic table having name, title, message, allowText, allowVideo, logo, questions, reviews
+// create a Review table, with text, video, stars as attributes
+
+model User {
+  id      String   @id @default(cuid())
+  name    String
+  email   String   @unique
+  topics  Topic[] // Relation to topics
+  reviews Review[] // Relation to reviews
+  image   String
+}
+
+model Topic {
+  id         String   @id @default(cuid())
+  name       String
+  title      String
+  message    String
+  allowText  Boolean  @default(true)
+  allowVideo Boolean  @default(true)
+  logo       String? // URL to logo image
+  questions  Json? // Store questions as JSON
+  reviews    Review[] // Relation to reviews
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+}
+
+model Review {
+  id      String  @id @default(cuid())
+  text    String?
+  video   String? // URL to video
+  stars   Int     @default(0)
+  topic   Topic   @relation(fields: [topicId], references: [id])
+  topicId String
+  user    User    @relation(fields: [userId], references: [id])
+  userId  String
+}
