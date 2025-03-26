@@ -64,8 +64,8 @@ const LoginPage = () => {
 
         {/* Right Section - Login */}
         <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white bg-opacity-90">
-          <div className="w-full max-w-md space-y-8">
-            <div className="text-center">
+          <div className="w-full max-w-md space-y-8 flex flex-col items-center justify-center min-h-[calc(100vh-8rem)]">
+            <div className="text-center w-full">
               <h1 className="text-5xl font-bold text-gray-900 mb-2">
                 Welcome Back
               </h1>
@@ -74,7 +74,7 @@ const LoginPage = () => {
               </p>
             </div>
 
-            <div className="mt-10">
+            <div className="w-full">
               <button
                 className="w-full flex items-center justify-center gap-3 px-6 py-3 border border-gray-300 rounded-lg text-base font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={handleGoogleLogin}

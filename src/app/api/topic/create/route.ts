@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { uploadToS3 } from "@/lib/s3-upload";
+import { PrismaClient } from "@prisma/client";
 
 const createTopicSchema = z.object({
   topicName: z.string().min(1, "Topic name is required"),
@@ -7,31 +9,52 @@ const createTopicSchema = z.object({
   message: z.string().min(1, "Message is required"),
   allowText: z.boolean(),
   allowVideo: z.boolean(),
-  logo: z.array(z.any()),
+  logo: z.string().startsWith("data:image/jpeg;base64", "Invalid logo format"),
   questions: z.array(z.string()),
 });
 
-type CreateTopicInput = z.infer<typeof createTopicSchema>;
+const prisma = new PrismaClient();
 
 export async function POST(request: NextRequest) {
   try {
-    // Parse the request body
     const body = await request.json();
 
-    // Validate the input
     const validatedData = createTopicSchema.parse(body);
 
-    // Here you would typically:
-    // 1. Process the logo file
-    // 2. Save to your database
-    // 3. Return the created topic
+    const logoUrl = await uploadToS3(validatedData.logo, "topics");
 
-    // For now, returning a success response
+    console.log({
+      ...validatedData,
+      logo: logoUrl,
+    });
+
+    const acq = await prisma.topic.create({
+      data: {
+        name: validatedData.topicName,
+        title: validatedData.title,
+        message: validatedData.message,
+        allowText: validatedData.allowText,
+        allowVideo: validatedData.allowVideo,
+        logo: logoUrl,
+        questions: validatedData.questions,
+        user: {
+          connect: {
+            id: body.user,
+          },
+        },
+      },
+    });
+
+    console.log({ acq });
+
     return NextResponse.json(
       {
         success: true,
         message: "Topic created successfully",
-        data: validatedData,
+        data: {
+          ...validatedData,
+          logo: logoUrl,
+        },
       },
       { status: 201 }
     );

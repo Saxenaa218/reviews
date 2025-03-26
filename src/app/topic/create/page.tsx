@@ -11,14 +11,22 @@ const CreateTopic = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 p-10 gap-5">
-      <TestimonialPage
-        allowText={allowText}
-        allowVideo={allowVideo}
-        header={title}
-        subheading={message}
-        logo={logo}
-        questions={questions}
-      />
+      <div className="h-full flex justify-center">
+        <div>
+          <p>
+            This card is mere the reflection of how the user will see the card
+            and the content
+          </p>
+          <TestimonialPage
+            allowText={allowText}
+            allowVideo={allowVideo}
+            header={title}
+            subheading={message}
+            logo={logo}
+            questions={questions}
+          />
+        </div>
+      </div>
       <CreateTopicForm />
     </div>
   );

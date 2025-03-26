@@ -73,9 +73,10 @@ const CreateTopicForm: React.FC = () => {
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-4">Create a New Topic</h2>
-      <p className="text-gray-600 mb-6">
-        After the Topic is created, it will generate a dedicated page for
-        collecting testimonials.
+      <p className="text-gray-600 mb-6 italic opacity-70">
+        A topic represents a specific product, service, or aspect you want to
+        collect testimonials for. For example: &ldquo;Customer Service
+        Experience&rdquo; or &ldquo;Product Quality&rdquo;.
       </p>
 
       <Form
