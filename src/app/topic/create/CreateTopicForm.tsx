@@ -4,10 +4,14 @@ import { Form, Input, Button, List, Checkbox, Upload } from "antd";
 import { message as antMessage } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useTopicStore } from "@/hooks/useTopicStore";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const CreateTopicForm: React.FC = () => {
   const [form] = Form.useForm();
   const { topicFormData, setTopicFormData } = useTopicStore();
+  const { data: sessionData } = useSession();
+  const { push } = useRouter();
 
   const handleQuestionChange = (index: number, value: string) => {
     const newQuestions = [...topicFormData.questions];
@@ -27,7 +31,6 @@ const CreateTopicForm: React.FC = () => {
   };
 
   const onFinish = async (values: any) => {
-    console.log(values);
     try {
       // TODO: uplaod to s3 and save filePath to DB then call this below
       const response = await fetch("/api/topic/create", {
@@ -36,9 +39,8 @@ const CreateTopicForm: React.FC = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          ...values,
-          questions: topicFormData.questions,
-          logo: "",
+          email: sessionData?.user?.email,
+          ...topicFormData,
         }),
       });
 
@@ -49,6 +51,7 @@ const CreateTopicForm: React.FC = () => {
       }
 
       antMessage.success("Topic created successfully!");
+      push("/dashboard");
     } catch (error) {
       console.error("Error creating topic:", error);
       antMessage.error("Failed to create topic");

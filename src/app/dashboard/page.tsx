@@ -12,7 +12,7 @@ const Dashboard = () => {
   const session = useSession();
   const { push } = useRouter();
 
-  const { createOrUpdateUser, user } = useUser(session.data?.user?.email || "");
+  const { user } = useUser(session.data?.user?.email || "");
 
   if (session.status === "unauthenticated") {
     push("/login");
