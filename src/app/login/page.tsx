@@ -26,7 +26,7 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen flex flex-col relative">
       {/* Background Image */}
-      <div className="absolute inset-0 z-0">
+      {/* <div className="absolute inset-0 z-0">
         <Image
           src="/background-image.jpg"
           alt="Background"
@@ -35,7 +35,7 @@ const LoginPage = () => {
           quality={100}
           className="w-full h-full"
         />
-      </div>
+      </div> */}
 
       <div className="relative z-10 flex flex-1">
         {/* Left Section - Animation/Video */}
@@ -98,7 +98,7 @@ const LoginPage = () => {
       </div>
 
       {/* Footer */}
-      <footer className="relative z-10 bg-white bg-opacity-90 py-4 text-center">
+      {/* <footer className="relative z-10 bg-white bg-opacity-90 py-4 text-center">
         <p className="text-gray-600">© 2025 Reviews. All rights reserved.</p>
         <div className="mt-2">
           <a href="/privacy" className="text-blue-500 hover:underline mx-2">
@@ -108,7 +108,7 @@ const LoginPage = () => {
             Terms of Service
           </a>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 };
